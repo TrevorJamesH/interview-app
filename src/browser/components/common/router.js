@@ -30,7 +30,6 @@ export default class Routes extends Component {
     const ProfileComponent = (props, state, params) =>
     <Profile profile={fakeProfile} {...props} stats={fakeStats} {...props} />
 
-
     return (
       <BrowserRouter>
         <div>

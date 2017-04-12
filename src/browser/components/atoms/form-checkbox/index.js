@@ -8,7 +8,7 @@ export default class FormCheckbox extends Component {
 
   render() {
     const checklist = this.props.choices.map( (choice, index) => {
-      const choiceId = 'checkbox-'+choice.split(' ').join('-')
+      const choiceId = this.props.prompt+'-'+choice.split(' ').join('-')
       const choiceLabel = ' '+choice
       return (
         <div key = {index} className="uk-form-controls uk-form-controls-text">
@@ -20,9 +20,11 @@ export default class FormCheckbox extends Component {
       )
     })
 
+    const prompt = this.props.prompt
     return (
-      <div>
-        {checklist}
+      <div className="uk-margin">
+        <label className="uk-form-label" htmlFor="form-horizontal-select">{prompt}</label>
+          {checklist}
       </div>
     )
   }
