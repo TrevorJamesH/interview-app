@@ -21,7 +21,7 @@ export default class FormSelect extends Component {
       <div className="uk-margin">
         <label className="uk-form-label" htmlFor="form-horizontal-select">{this.props.prompt}</label>
         <div className="uk-form-controls">
-          <select id={this.props.id} className="uk-select form-horizontal-select" onChange={this.props.onChange}>
+          <select id={this.props.passId} className="uk-select form-horizontal-select" onChange={this.props.onChange}>
             {isOptionRequired}
             {options}
           </select>

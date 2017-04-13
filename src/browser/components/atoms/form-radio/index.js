@@ -15,7 +15,7 @@ export default class FormRadio extends Component {
   }
 
   render() {
-    const checklist = this.props.options.map( (option, index) => {
+    const radio = this.props.options.map( (option, index) => {
       const optionId = this.props.prompt+'-'+option.split(' ').join('-')
       const optionLabel = ' '+option
       const iteration = FormRadio.iterator
@@ -33,7 +33,7 @@ export default class FormRadio extends Component {
     return (
       <div className="uk-margin">
         <div className="uk-form-label">{prompt}</div>
-        {checklist}
+        {radio}
       </div>
     )
   }

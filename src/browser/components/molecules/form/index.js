@@ -11,28 +11,24 @@ export default class Form extends Component{
     this.state = {}
   }
 
-  handleChange(property, value, event) {
-    if(event.target.value) {
-      this.setState({[property]: event.target.value});
+  handleChange(property, isCheckbox, event) {
+    if(isCheckbox) {
+      this.setState({[property]: event.target.checked});
     } else {
-      this.setState({[property]: value});
+      this.setState({[property]: event.target.value});
     }
-  }
-
-  onChange(property, value, func, event) {
-    if(func) {
-      func(property, event)
-    }
-    this.handleChange(property, value, event)
+    console.log('STATE OF FORM:', this.state)
   }
 
   render(){
-    // console.log('-=---- props', this.props)
+    let iteratorRadio = 0
+    let iteratorCheckbox = 0
+    let iteratorInput = 0
     const form = this.props.inputModules.map( (inputModule, index) => {
-      return {'Input': (<FormInput prompt={inputModule.prompt} placeholder={inputModule.placeholder} onChange={addStuffToState}/>),
-        'Checkbox': (<FormCheckbox prompt={inputModule.prompt} options={inputModule.options} onChange={addStuffToState}/>),
-        'Radio': (<FormRadio prompt={inputModule.prompt} options={inputModule.options} onChange={addStuffToState}/>),
-        'Select': (<FormSelect prompt={inputModule.prompt} options={inputModule.options} isOptionRequired={inputModule.isOptionRequired} onChange={this.onChange.bind(this, )} id={inputModule.id}/>)
+      return {'Input': (<FormInput prompt={inputModule.prompt} placeholder={inputModule.placeholder} onChange={this.handleChange.bind(this, 'input'+iteratorInput++, false)}/>),
+        'Checkbox': (<FormCheckbox prompt={inputModule.prompt} options={inputModule.options} onChange={this.handleChange.bind(this, 'checkbox'+iteratorCheckbox++, true)}/>),
+        'Radio': (<FormRadio prompt={inputModule.prompt} options={inputModule.options} onChange={this.handleChange.bind(this, 'radio'+iteratorRadio++, false)}/>),
+        'Select': (<FormSelect prompt={inputModule.prompt} options={inputModule.options} isOptionRequired={inputModule.isOptionRequired} onChange={this.handleChange.bind(this, 'select'+inputModule.id, false) } passId={inputModule.id}/>)
       }[inputModule.type]
     })
 
