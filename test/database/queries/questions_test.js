@@ -1,7 +1,7 @@
 import chai, { expect } from 'chai'
 import * as question from '../../../src/database/queries/questions'
 
-describe('Question Tests', () => {
+describe.only('Question Tests', () => {
   const newQuestion = [
     {
       question: "What is the number that represents the meaning of life",
@@ -24,8 +24,17 @@ describe('Question Tests', () => {
       tags: ["Don't let Shereef see this", "MachineLearning"],
       level: "0",
       answer: "THE ALGORITHM",
-      prompts: ["BubbleSort", "LearnersGuild", "#LGPROBLEMS"],
+      prompts: ["BubbleSort", "LearnersGuild", "#LGPROBLEMS", "SHOTGUN Sort"],
       score: 1
+    },
+    {
+      question: "I have a gamemode",
+      tags: ["Don't let Shereef see this", "MachineLearning"],
+      level: "2",
+      gamemode: 'Blitz'
+      answer: "Blah",
+      prompts: ["BubbleSort", "LearnersGuild", "Stuff"],
+      score: 8
     }
   ]
 
@@ -40,6 +49,14 @@ describe('Question Tests', () => {
           expect(question[0].question).to.equal('What is the number that represents the meaning of life')
           expect(question[0].tags).to.eql(["existentialism", "midlife-crisis"])
           expect(question[0].score).to.eql(12)
+        })
+    })
+
+    it('should have a gamemode', () => {
+      return question.create( newQuestion[3] )
+        .then( question => {
+          expect(question[3].question).to.equal('I have a gamemode')
+          expect(question[3].gamemode).to.equal('Blitz')
         })
     })
   })
