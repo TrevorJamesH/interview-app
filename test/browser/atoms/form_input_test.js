@@ -14,8 +14,7 @@ describe('<FormInput />', () => {
 
   it('should have an input field inside the main div', () => {
     const wrapper = mount(<FormInput />)
-    expect(wrapper.children()).to.have.length(1)
+    expect(wrapper.children()).to.have.length(2)
     expect(wrapper.find('div.uk-form-controls').childAt(0).type()).to.equal('input')
-    expect(wrapper.find('#form-horizontal-text')).to.have.length(1)
   })
 })
