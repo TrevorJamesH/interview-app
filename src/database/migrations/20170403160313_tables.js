@@ -15,6 +15,7 @@ exports.up = function(knex, Promise) {
       table.string('question');
       table.string('level');
       table.string('answer');
+      table.string('gamemode');
       table.integer('score');
       table.specificType('prompts', 'jsonb')
     })

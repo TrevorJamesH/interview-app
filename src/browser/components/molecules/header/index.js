@@ -22,7 +22,8 @@ export default class Header extends Component {
       {"type": "Input", "placeholder": "What is the meaning of life, the universe, and everything?", "prompt": "What Is Your Question?"},
       {"type": "Input", "placeholder": "42", "prompt": "What Is The Answer?"},
       {"type": "Checkbox", "options": ["Core-JavaScript", "Functional-Programming"], "prompt": "Topic"},
-      {"type": "Radio", "options": ["Beginner", "Intermediate", "Advanced", "Jedi"], "prompt": "Difficulty Levels"}
+      {"type": "Radio", "options": ["Beginner", "Intermediate", "Advanced", "Jedi"], "prompt": "Difficulty Levels"},
+      {"type": "Select", "id": "gamemode", "options": ["Blitz", "Whiteboard", "Jepordy"], "prompt": "Game Mode", "isOptionRequired": true},
     ]
 
     return (
