@@ -6,7 +6,6 @@ import Landing from '../../components/Pages/Landing/index'
 import Layout from '../common/router'
 import Header from '../molecules/header/index'
 import GameOptions from '../../components/molecules/game-options/index'
-import SelectTag from '../../components/atoms/select-tag/index'
 import Profile from '../pages/profile/index'
 
 export default class Routes extends Component {
