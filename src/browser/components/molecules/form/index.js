@@ -8,33 +8,104 @@ import FormInput from '../../atoms/form-input/index'
 export default class Form extends Component{
   constructor(props){
     super(props)
-    this.state = {}
+    this.state = {
+      iterators: {
+        iteratorRadio: 0,
+        iteratorCheckbox: 0,
+        iteratorInput: 0,
+        iteratorSelect: 0
+      }
+    }
   }
 
-  handleChange(property, isCheckbox, event) {
-    if(isCheckbox) {
-      this.setState({[property]: event.target.checked});
-    } else {
-      this.setState({[property]: event.target.value});
-    }
-    console.log('STATE OF FORM:', this.state)
+  handleChange(args, event) {
+    let property = args.property
+    let isCheckbox = args.isCheckbox
+    new Promise( (resolve, reject) => {
+      console.log('Event:', event)
+      if(isCheckbox) {
+        this.setState({[property]: event.target.checked}, () => {
+          resolve()
+        });
+      } else {
+        this.setState({[property]: event.target.value}, () => {
+          resolve()
+        });
+      }
+    })
+    .then( () => {
+      console.log('STATE OF FORM:', this.state)
+    })
+  }
+
+  initTextInput(inputModule) {
+    let domElement = (<FormInput 
+      prompt={inputModule.prompt} 
+      placeholder={inputModule.placeholder} 
+      onChange={this.handleChange.bind(this, {property: 'input'+this.state.iterators.iteratorInput, isCheckbox: false})}/>
+    )
+    let currentState = this.state
+    currentState.iterators.iteratorInput++
+    this.setState( currentState )
+    return domElement
+  }
+
+  initCheckbox(inputModule) {
+    let domElement = (<FormCheckbox 
+      prompt={inputModule.prompt} 
+      options={inputModule.options} 
+      onChange={this.handleChange.bind(this, {property: 'checkbox'+this.state.iterators.iteratorCheckbox, isCheckbox: true})}/>)
+    let currentState = this.state
+    currentState.iterators.iteratorCheckbox++
+    this.setState( currentState )
+    return domElement
+  }
+
+  initRadio(inputModule) {
+    let domElement = (<FormRadio 
+      prompt={inputModule.prompt} 
+      options={inputModule.options} 
+      onChange={this.handleChange.bind(this)}
+      self={this}/>)
+    let currentState = this.state
+    currentState.iterators.iteratorRadio++
+    this.setState( currentState )
+    return domElement
+  }
+
+  initSelect(inputModule) {
+    let domElement = (
+      <FormSelect 
+      prompt={inputModule.prompt} 
+      options={inputModule.options} 
+      isOptionRequired={inputModule.isOptionRequired} 
+      onChange={this.handleChange.bind(this, {property: 'select'+this.state.iterators.iteratorSelect, isCheckbox: false}) } 
+      passId={inputModule.id}
+      self={this}/>)
+    let currentState = this.state
+    currentState.iterators.iteratorSelect++
+    this.setState( currentState )
+    return domElement
+  }
+
+  componentDidMount() {
+    const form = this.props.inputModules.map( inputModule => {
+      return {'Input': this.initTextInput.bind(this, inputModule),
+        'Checkbox': this.initCheckbox.bind(this, inputModule),
+        'Radio': this.initRadio.bind(this, inputModule),
+        'Select': this.initSelect.bind(this, inputModule)
+      }[inputModule.type]()
+    })
+    this.setState({form: form}, () => {
+      console.log(this.state)
+    })
   }
 
   render(){
-    let iteratorRadio = 0
-    let iteratorCheckbox = 0
-    let iteratorInput = 0
-    const form = this.props.inputModules.map( (inputModule, index) => {
-      return {'Input': (<FormInput prompt={inputModule.prompt} placeholder={inputModule.placeholder} onChange={this.handleChange.bind(this, 'input'+iteratorInput++, false)}/>),
-        'Checkbox': (<FormCheckbox prompt={inputModule.prompt} options={inputModule.options} onChange={this.handleChange.bind(this, 'checkbox'+iteratorCheckbox++, true)}/>),
-        'Radio': (<FormRadio prompt={inputModule.prompt} options={inputModule.options} onChange={this.handleChange.bind(this, 'radio'+iteratorRadio++, false)}/>),
-        'Select': (<FormSelect prompt={inputModule.prompt} options={inputModule.options} isOptionRequired={inputModule.isOptionRequired} onChange={this.handleChange.bind(this, 'select'+inputModule.id, false) } passId={inputModule.id}/>)
-      }[inputModule.type]
-    })
 
     return(
       <form className="uk-form-horizontal uk-margin-large">
-        {form}
+        {this.state.form}
       </form>
     )
   }

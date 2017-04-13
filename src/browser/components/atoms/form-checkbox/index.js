@@ -10,10 +10,15 @@ export default class FormCheckbox extends Component {
     const checklist = this.props.options.map( (option, index) => {
       const optionId = this.props.prompt+'-'+option.split(' ').join('-')
       const optionLabel = ' '+option
+
+      const renameMe = (event) => {
+        this.props.onChange({property: optionId, isCheckbox: true}, event)
+      }
+
       return (
         <div key = {index} className="uk-form-controls uk-form-controls-text">
           <label>
-            <input className="uk-checkbox" id={optionId} type="checkbox" name={optionId}/>
+            <input className="uk-checkbox" id={optionId} type="checkbox" name={optionId} onChange={renameMe}/>
             {optionLabel}
           </label>
         </div>

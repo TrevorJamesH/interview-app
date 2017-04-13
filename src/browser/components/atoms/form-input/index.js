@@ -12,7 +12,7 @@ export default class FormInput extends Component {
         <div key={prompt} className="uk-margin">
             <label className="uk-form-label" htmlFor="form-horizontal-text">{prompt}</label>
             <div className="uk-form-controls">
-                <input className="uk-input form-horizontal-text" type="text" id={prompt} placeholder={placeholder} />
+                <input className="uk-input form-horizontal-text" type="text" id={prompt} placeholder={placeholder} onChange={this.props.onChange} />
             </div>
         </div>
     )

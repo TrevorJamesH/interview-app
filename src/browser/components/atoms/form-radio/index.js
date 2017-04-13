@@ -22,7 +22,7 @@ export default class FormRadio extends Component {
       return (
         <div key = {index} className="uk-form-controls uk-form-controls-text">
           <label>
-            <input className="uk-radio" id={optionId} type="radio" name={iteration}/>
+            <input className="uk-radio" id={optionId} type="radio" name={iteration} value={option} onChange={this.props.onChange.bind(this.props.self, option)}/>
             {optionLabel}
           </label>
         </div>
