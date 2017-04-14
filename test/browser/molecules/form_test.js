@@ -54,7 +54,7 @@ describe.only('<Form />', () => {
       console.log('Before asynch')
       setTimeout( () => {
         console.log('I finally got it:', wrapper.state())
-      }, 5)
+      }, 25)
       console.log('After asynch')
       
       expect(wrapper.find(FormSelect).prop('options')).to.contain('Layside')
